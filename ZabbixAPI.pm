@@ -393,7 +393,8 @@ sub get_host_by_name {
         output => ['hostid'],
         filter =>{host=>[$host_name]},
         selectGroups => ['groupid','name'],
-        selectParentTemplates => ['templateid','name']
+        selectParentTemplates => ['templateid','name'],
+        selectMacros => ['macro','value']
     };
     my $result = $self->do('host.get',$json);
     return $result->[0];
@@ -464,7 +465,32 @@ sub create_or_merge_host {
         
         if ($params->{macros}) {
             #merge with already existed
-            die "ERROR: host macros merge is not supported yet\n";
+            my @macros;
+            foreach my $macro (@{$params->{macros}}){
+                push @macros,
+                    {
+                     macro => $macro->{macro},
+                     value => $macro->{value}
+                    };
+            }
+            foreach my $macro (@{$host->{macros}}){
+                push @macros,
+                    {
+                     macro => $macro->{macro},
+                     value => $macro->{value}
+                    };
+            }
+            my %seen = (); # see http://perldoc.perl.org/perlfaq4.html#How-can-I-remove-duplicate-elements-from-a-list-or-array%3f
+            @macros = grep { ! $seen{ $_->{macro} }++ } @macros;
+            
+            my $i=0;
+            delete $params->{macros};
+            
+            foreach my $macro (@macros) {
+                $params->{macros}->[$i] = $macro;
+                $i++;
+            }
+            
         }
         
         if ($params->{interfaces}) {
