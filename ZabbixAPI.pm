@@ -3,6 +3,7 @@ use Data::Dumper;
 use LWP;
 use JSON::XS;
 
+my @no_auth_methods =  ('user.login','apiinfo.version');
 sub new {
     my $class = shift;
     my $args  = shift;
@@ -30,6 +31,21 @@ sub id {
     my $self = shift;
     return $self->{id}++;
 }
+
+
+sub prepare_auth { 
+    my $self = shift;
+    my $method = shift;
+
+    if (grep /$method/,@no_auth_methods) {
+        return undef;
+    }
+    else 
+    {
+        return $self->{auth};
+    }
+};
+
 sub do {
 
     my $self   = shift;
@@ -42,7 +58,7 @@ sub do {
             method  => $method,
             params  => $params,
             id      => $self->id,
-            auth    => $self->{auth},
+            auth    => $self->prepare_auth($method)
         }
     );
 
@@ -78,7 +94,7 @@ sub do_raw {
             method  => $method,
             params  => JSON::XS->new->utf8->decode($params),
             id      => $self->id,
-            auth    => $self->{auth},
+            auth    => $self->prepare_auth($method)
         }
     );
 
