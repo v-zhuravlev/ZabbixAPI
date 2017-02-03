@@ -1,6 +1,17 @@
 # ZabbixAPI
 Zabbix API perl module provided as is.
 
+## Dependencies  
+Perl modules required:  
+```
+LWP
+JSON::XS
+```
+There are numerous ways to install them:  
+
+| in Debian  | In Centos* | using CPAN | using cpanm|  
+|------------|-----------|------------|------------|  
+|  `apt-get install libwww-perl libjson-xs-perl` | `yum install perl-JSON-XS perl-libwww-perl perl-LWP-Protocol-https` | `PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'install Bundle::LWP'` and  `PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'install JSON::XS` | `cpanm install LWP` and `cpanm install JSON::XS`|  
 
 ## Sample usage  
 ### Login / logout
