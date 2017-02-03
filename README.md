@@ -66,3 +66,41 @@ $result = $zbx->create_or_update_mediatype($params);
 ```
 $zbx->import_configuration_from_file("$file");
 ```
+### Import all Templates from XML files in specific directory:  
+```
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+use FindBin qw($Bin);
+use lib "$Bin/ZabbixAPI";
+
+use Data::Dumper;
+use ZabbixAPI;
+my $username = 'Admin';
+my $password = 'zabbix';
+my $api_url = 'http://localhost/zabbix/api_jsonrpc.php';
+
+my $zbx;
+my $params;
+my $json;
+my $result;
+$zbx = ZabbixAPI->new( { api_url=>$api_url, username => $username, password => $password } );
+
+$zbx->login();
+
+my $temp_dir = $ARGV[0] or die "Please provide directory with templates as first ARG\n"; #default is zbx_template_pack subfolder if no folder is provided
+
+    opendir my $dir, $temp_dir  or die "Cannot open directory: $!";
+    my @files = grep { /\.xml$/ && -f "$temp_dir/$_" } readdir($dir);
+    closedir $dir;
+
+    foreach my $file (@files) {
+            print $file."\n";
+            $zbx->import_configuration_from_file("$temp_dir/$file");
+    }
+
+
+
+$zbx->logout();
+```
