@@ -15,7 +15,7 @@ There are numerous ways to install them:
 
 ## Sample usage  
 ### Login / logout
-```
+```perl
 $zbx = ZabbixAPI->new( { api_url => $url, username => $user, password => $password } );
 $zbx->login();
 ## DO SOMETHING
@@ -23,7 +23,7 @@ $zbx->logout();
 ```
 
 ### Get params from raw JSON(copy and paste params from Zabbix API documentation examples):  
-```
+```perl
 $json = <<'END_PARAMS';
 {
         "output": ["host","name","hostid","status"],
@@ -35,7 +35,7 @@ END_PARAMS
 my $host_result = $zbx->do_raw('host.get',$json);
 ```
 ### Or prepare params using perl hash:  
-```
+```perl
 my $json = {
              hostid => 10084,
              selectParentTemplates => 'extend'
@@ -44,7 +44,7 @@ my $json = {
 my $host_obj=$zbx->do('host.get',$json);
 ```
 ### Create mediatype
-```
+```perl
 #setup email
 $json = <<'END_PARAMS';
     {
@@ -63,11 +63,11 @@ $result = $zbx->create_or_update_mediatype($params);
 
 
 ### Import Templates from XML files (with create,update,delete options all ticked)  
-```
+```perl
 $zbx->import_configuration_from_file("$file");
 ```
 ### Import all Templates from XML files in specific directory:  
-```
+```perl
 #!/usr/bin/perl
 use warnings;
 use strict;
