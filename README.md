@@ -89,7 +89,7 @@ $zbx = ZabbixAPI->new( { api_url=>$api_url, username => $username, password => $
 
 $zbx->login();
 
-my $temp_dir = $ARGV[0] or die "Please provide directory with templates as first ARG\n"; #default is zbx_template_pack subfolder if no folder is provided
+my $temp_dir = $ARGV[0] or die "Please provide directory with templates as first ARG\n"; 
 
     opendir my $dir, $temp_dir  or die "Cannot open directory: $!";
     my @files = grep { /\.xml$/ && -f "$temp_dir/$_" } readdir($dir);
