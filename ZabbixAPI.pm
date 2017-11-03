@@ -77,7 +77,7 @@ sub do {
         return $return->{result};
     }
     else {
-        print $res->status_line, "\n";
+        die $res->status_line, "\n";
     }
 
 }
@@ -111,7 +111,7 @@ sub do_raw {
         return $return->{result};
     }
     else {
-        print $res->status_line, "\n";
+        die $res->status_line, "\n";
     }
 
 
