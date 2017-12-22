@@ -111,3 +111,26 @@ see https://github.com/v-zhuravlev/ZabbixAPI/blob/master/bin/zabbix-add-images.p
 `perl zabbix-add-images.pl dir_with_png_icons`  
 or  
 `perl zabbix-add-images.pl png_icon_file`  
+
+For example:  
+```
+[vagrant@zabbix-lab zabbix]$ perl zabbix-add-images.pl zbx_pics/zabbix_import/
+zbx_pics/zabbix_import//aircondition.png
+zbx_pics/zabbix_import//dlink_des3526.png
+zbx_pics/zabbix_import//dlink_des3526_10px.png
+zbx_pics/zabbix_import//dlink_des3526_15px.png
+zbx_pics/zabbix_import//dlink_des3526_25px.png
+zbx_pics/zabbix_import//dlink_des3528.png
+zbx_pics/zabbix_import//dlink_des3528_10px.png
+zbx_pics/zabbix_import//dlink_des3528_15px.png
+zbx_pics/zabbix_import//dlink_des3528_25px.png
+...
+zbx_pics/zabbix_import//ubnt_sector_l_100px.png
+zbx_pics/zabbix_import//ubnt_sector_l_25px.png
+zbx_pics/zabbix_import//ubnt_sector_l_50px.png
+zbx_pics/zabbix_import//ubnt_sector_r.png
+zbx_pics/zabbix_import//ubnt_sector_r_100px.png
+zbx_pics/zabbix_import//ubnt_sector_r_25px.png
+zbx_pics/zabbix_import//ubnt_sector_r_50px.png
+```
+
