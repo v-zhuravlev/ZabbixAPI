@@ -16,7 +16,7 @@ my $username = 'Admin';
 my $password = 'zabbix';
 my $api_url  = 'http://localhost/zabbix/api_jsonrpc.php';
 my $filter   = ''; #use this filter to import only files that contain this sequence.
-my $opt_help =0 ;
+my $opt_help = 0;
 my $help = <<'END_PARAMS';
 
 To import a single image:
@@ -65,7 +65,8 @@ if ( -d $temp ) {
     $zbx->login();
     foreach my $file ( sort { $a cmp $b } (@images) ) {
         print "$temp/$file\n";
-        $zbx->import_image_from_file("$temp/$file",basename("$temp/$file"));
+        my $filename = (fileparse("$temp/$file", qr/\.[^.]*/))[0];
+        $zbx->import_image_from_file("$temp/$file",$filename);
 		
     }
     $zbx->logout();
@@ -74,6 +75,7 @@ if ( -d $temp ) {
 elsif ( -f $temp ) {
     $zbx->login();
     print $temp. "\n";
-	$zbx->import_image_from_file($temp,basename($temp));
+    my $filename = (fileparse($temp, qr/\.[^.]*/))[0];
+    $zbx->import_image_from_file($temp,$filename);
     $zbx->logout();
 }
