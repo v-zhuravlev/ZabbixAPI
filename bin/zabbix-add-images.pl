@@ -19,16 +19,16 @@ my $filter   = ''; #use this filter to import only files that contain this seque
 my $opt_help =0 ;
 my $help = <<'END_PARAMS';
 
-To import a single template:
-    import-images.pl [options] template.xml
+To import a single image:
+    import-images.pl [options] icon.png
 
      Options:
        --api_url,--url     Zabbix API URL, default is http://localhost/zabbix/api_jsonrpc.php
        --username,-u       Zabbix API user, default is 'Admin'
        --password,-p       Zabbix API user's password, default is 'zabbix'
 
-To import all images in the directory:
-    import-images.pl [options] dir_with_images
+To import all images from the directory:
+    import-images.pl [options] dir_with_icons
 
      Options:
        --api_url,--url     Zabbix API URL, default is http://localhost/zabbix/api_jsonrpc.php
