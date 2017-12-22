@@ -2,6 +2,7 @@ package ZabbixAPI;
 use Data::Dumper;
 use LWP;
 use JSON::XS;
+use MIME::Base64 qw(encode_base64);
 
 my @no_auth_methods =  ('user.login','apiinfo.version');
 sub new {
@@ -531,5 +532,56 @@ sub create_or_merge_host {
     
     
 }
+
+
+sub import_image_from_file {
+	my $self = shift;
+    my $file = shift;
+	my $imagename = shift || $file; 
+	my $imagetype = shift || 1; # 1 - icon , 2 - background
+    my $image;
+	my $result;
+	my $json;
+    {
+      local $/ = undef;
+      open(my $fh,, $file) or die "Error opening $file: $!";
+
+      $image = <$fh>;
+      close $fh;
+    }
+	
+    my $params = {name => $imagename, imagetype => 1, image => encode_base64($image)};
+    
+	eval {#try to import image
+         $result =  $self->do('image.create', $params);
+    };
+    if ($@) {
+        if($@ =~ /already exists/) {
+            warn "WARN: $params->{name} already exists. Updating instead..."."\n";
+            #get imageid and update instead
+            $json = { output => ['imageid'], filter =>{name=>[$params->{name}]}};
+            my $id = $self->do('image.get',$json);
+            $params->{imageid}= $id->[0]->{imageid};
+			delete($params->{imagetype});
+            #update instead of creating....
+            $result =  $self->do('image.update', $params);
+            return $result;
+        }
+        else {
+        
+            die $@;
+        
+        }
+    }
+    else {
+        
+        return $result;
+    
+    }
+}
+
+
+
+
 
 1;
