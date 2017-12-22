@@ -104,3 +104,10 @@ my $temp_dir = $ARGV[0] or die "Please provide directory with templates as first
 
 $zbx->logout();
 ```
+
+
+### Import all images from directory and make them icons (mass import of icons)  
+see https://github.com/v-zhuravlev/ZabbixAPI/blob/master/bin/zabbix-add-images.pl sample script. Then run  
+`perl zabbix-add-images.pl dir_with_png_icons`  
+or  
+`perl zabbix-add-images.pl png_icon_file`  
